@@ -1,4 +1,4 @@
-# SparkViz-Web
+# React Boilerplate
 
 ## Initializing Packages
 
@@ -11,9 +11,3 @@ npm install
 ```
 npx nodemon node.js
 ```
-
-## Compiling ScalaJS to Javascript
-
-```
-./scalajs.sh
-```# React-Boilerplate
