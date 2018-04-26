@@ -1,0 +1,118 @@
+Manifest-Version: 1.0
+Class-Path: akka-http_2.11-10.0.10.jar cats-core_sjs0.6_2.11-1.0.0-RC2
+ .jar scalajs-library_2.11-0.6.19.jar java-xmlbuilder-1.0.jar avro-ipc
+ -1.7.7.jar stax-api-1.0-2.jar spark-unsafe_2.11-2.2.1.jar circe-parse
+ r_sjs0.6_2.11-0.9.0-M3.jar hadoop-yarn-api-2.6.5.jar javassist-3.18.1
+ -GA.jar spark-network-common_2.11-2.2.1.jar leveldbjni-all-1.8.jar mx
+ 4j-3.0.2.jar aopalliance-repackaged-2.4.0-b34.jar metrics-core-3.1.2.
+ jar jsr305-1.3.9.jar osgi-resource-locator-1.0.1.jar slf4j-log4j12-1.
+ 7.16.jar py4j-0.10.4.jar parquet-jackson-1.8.2.jar lz4-1.3.0.jar parq
+ uet-common-1.8.2.jar chill_2.11-0.8.0.jar shapeless_sjs0.6_2.11-2.3.2
+ .jar hadoop-mapreduce-client-shuffle-2.6.5.jar javax.annotation-api-1
+ .2.jar parquet-format-2.3.1.jar machinist_2.11-0.6.2.jar commons-coll
+ ections-3.2.2.jar args4j-2.0.26.jar jsr305-1.3.9.jar gson-2.2.4.jar g
+ uava-19.0.jar protobuf-java-2.5.0.jar json-simple-1.1.1.jar rhino-1.7
+ R5pre4.jar closure-compiler-externs-java-6-v20160517.jar closure-comp
+ iler-java-6-v20160517.jar scalajs-ir_2.12-0.6.19.jar scalajs-js-envs_
+ 2.12-0.6.19.jar scalajs-sbt-test-adapter_2.12-0.6.19.jar scalajs-tool
+ s_2.12-0.6.19.jar test-interface-1.0.jar envjs-1.2.jar sbt-scalajs-0.
+ 6.19.jar jline.jar scala-compiler.jar scala-library.jar scala-reflect
+ .jar scala-xml_2.12.jar actions_2.12-1.1.0.jar caffeine-2.5.6.jar col
+ lections_2.12-1.1.0.jar command_2.12-1.1.0.jar compiler-interface-1.1
+ .0.jar completion_2.12-1.1.0.jar config-1.2.0.jar core-macros_2.12-1.
+ 1.0.jar disruptor-3.3.6.jar fastparse-utils_2.12-0.4.2.jar fastparse_
+ 2.12-0.4.2.jar gigahorse-core_2.12-0.3.0.jar gigahorse-okhttp_2.12-0.
+ 3.0.jar io_2.12-1.1.3.jar ivy-2.3.0-sbt-b18f59ea3bc914a297bb6f1a4f7fb
+ 0ace399e310.jar jawn-parser_2.12-0.10.4.jar jline-2.14.4.jar jna-4.5.
+ 0.jar jna-platform-4.5.0.jar jsch-0.1.46.jar launcher-interface-1.0.2
+ .jar lenses_2.12-0.4.12.jar librarymanagement-core_2.12-1.1.2.jar lib
+ rarymanagement-ivy_2.12-1.1.2.jar log4j-api-2.8.1.jar log4j-core-2.8.
+ 1.jar log4j-slf4j-impl-2.8.1.jar logic_2.12-1.1.0.jar main-settings_2
+ .12-1.1.0.jar main_2.12-1.1.0.jar okhttp-3.7.0.jar okhttp-urlconnecti
+ on-3.7.0.jar okio-1.12.0.jar protobuf-java-3.3.1.jar protocol_2.12-1.
+ 1.0.jar reactive-streams-1.0.0.jar run_2.12-1.1.0.jar sbinary_2.12-0.
+ 4.4.jar sbt-1.1.0.jar scala-parser-combinators_2.12-1.0.5.jar scala-r
+ eflect-2.12.4.jar scala-xml_2.12-1.0.6.jar scalacache-caffeine_2.12-0
+ .20.0.jar scalacache-core_2.12-0.20.0.jar scalapb-runtime_2.12-0.6.0.
+ jar shaded-scalajson_2.12-1.0.0-M4.jar sjson-new-core_2.12-0.8.2.jar 
+ sjson-new-murmurhash_2.12-0.8.2.jar sjson-new-scalajson_2.12-0.8.2.ja
+ r slf4j-api-1.7.25.jar sourcecode_2.12-0.1.3.jar ssl-config-core_2.12
+ -0.2.2.jar task-system_2.12-1.1.0.jar tasks_2.12-1.1.0.jar template-r
+ esolver-0.1.jar test-agent-1.1.0.jar test-interface-1.0.jar testing_2
+ .12-1.1.0.jar util-cache_2.12-1.1.2.jar util-control_2.12-1.1.2.jar u
+ til-interface-1.1.2.jar util-logging_2.12-1.1.2.jar util-position_2.1
+ 2-1.1.2.jar util-relation_2.12-1.1.2.jar util-tracking_2.12-1.1.2.jar
+  zinc-apiinfo_2.12-1.1.0.jar zinc-classfile_2.12-1.1.0.jar zinc-class
+ path_2.12-1.1.0.jar zinc-compile-core_2.12-1.1.0.jar zinc-compile_2.1
+ 2-1.1.0.jar zinc-core_2.12-1.1.0.jar zinc-ivy-integration_2.12-1.1.0.
+ jar zinc-persist_2.12-1.1.0.jar zinc_2.12-1.1.0.jar stream-2.7.0.jar 
+ macro-compat_sjs0.6_2.11-1.1.1.jar jaxb-api-2.2.2.jar breeze-macros_2
+ .11-0.13.2.jar parquet-column-1.8.2.jar xml-apis-1.3.04.jar circe-gen
+ eric_sjs0.6_2.11-0.9.0-M3.jar spark-catalyst_2.11-2.2.1.jar metrics-j
+ vm-3.1.2.jar metrics-graphite-3.1.2.jar spark-tags_2.11-2.2.1.jar akk
+ a-actor_2.11-2.4.19.jar avro-mapred-1.7.7-hadoop2.jar jcl-over-slf4j-
+ 1.7.16.jar uncommons-maths-1.2.2a.jar jersey-client-2.22.2.jar scala-
+ reflect-2.11.11.jar commons-cli-1.2.jar scala-library-2.11.11.jar jav
+ ax.inject-2.4.0-b34.jar api-util-1.0.0-M20.jar jackson-core-asl-1.9.1
+ 3.jar httpcore-4.3.3.jar spark-mllib-local_2.11-2.2.1.jar hadoop-yarn
+ -server-common-2.6.5.jar shapeless_2.11-2.3.2.jar jackson-mapper-asl-
+ 1.9.13.jar netty-all-4.0.43.Final.jar scala-java8-compat_2.11-0.7.0.j
+ ar hk2-api-2.4.0-b34.jar hadoop-yarn-client-2.6.5.jar jersey-media-ja
+ xb-2.22.2.jar cats-kernel_2.11-1.0.0-RC2.jar kryo-shaded-3.0.3.jar ap
+ i-asn1-api-1.0.0-M20.jar circe-core_sjs0.6_2.11-0.9.0-M3.jar paraname
+ r-2.6.jar mail-1.4.7.jar spark-graphx_2.11-2.2.1.jar akka-parsing_2.1
+ 1-10.0.10.jar scalajs-dom_sjs0.6_2.11-0.9.3.jar cats-core_2.11-1.0.0-
+ RC2.jar hadoop-annotations-2.6.5.jar metrics-json-3.1.2.jar snappy-ja
+ va-1.1.2.6.jar jersey-server-2.22.2.jar aeron-client-1.2.5.jar ssl-co
+ nfig-core_2.11-0.2.1.jar netty-3.9.9.Final.jar cats-macros_sjs0.6_2.1
+ 1-1.0.0-RC2.jar jline-0.9.94.jar compress-lzf-1.0.3.jar netty-3.10.6.
+ Final.jar json4s-jackson_2.11-3.2.11.jar RoaringBitmap-0.5.11.jar gso
+ n-2.2.4.jar guava-11.0.2.jar httpclient-4.3.6.jar machinist_sjs0.6_2.
+ 11-0.6.2.jar jersey-guava-2.22.2.jar hadoop-yarn-common-2.6.5.jar arp
+ ack_combined_all-0.1.jar circe-numbers_2.11-0.9.0-M3.jar jets3t-0.9.3
+ .jar protobuf-java-2.5.0.jar core-1.1.2.jar cglib-2.2.1-v20090111.jar
+  agrona-0.9.5.jar pmml-model-1.2.15.jar circe-numbers_sjs0.6_2.11-0.9
+ .0-M3.jar circe-generic_2.11-0.9.0-M3.jar hk2-utils-2.4.0-b34.jar xz-
+ 1.0.jar config-1.3.0.jar akka-protobuf_2.11-2.4.19.jar commons-crypto
+ -1.0.0.jar json4s-ast_2.11-3.2.11.jar aopalliance-1.0.jar jettison-1.
+ 1.jar antlr4-runtime-4.5.3.jar hadoop-hdfs-2.6.5.jar curator-client-2
+ .6.0.jar apacheds-kerberos-codec-2.0.0-M15.jar activation-1.1.1.jar x
+ mlenc-0.52.jar jtransforms-2.4.0.jar spark-launcher_2.11-2.2.1.jar ha
+ doop-mapreduce-client-jobclient-2.6.5.jar bcprov-jdk15on-1.51.jar sca
+ la-parser-combinators_2.11-1.0.4.jar commons-compiler-3.0.0.jar circe
+ -parser_2.11-0.9.0-M3.jar hadoop-mapreduce-client-app-2.6.5.jar hadoo
+ p-auth-2.6.5.jar circe-core_2.11-0.9.0-M3.jar xercesImpl-2.9.1.jar sl
+ f4j-api-1.7.16.jar avro-1.7.7.jar unused-1.0.0.jar base64-2.3.8.jar h
+ adoop-client-2.6.5.jar cats-macros_2.11-1.0.0-RC2.jar commons-codec-1
+ .10.jar spark-mllib_2.11-2.2.1.jar spark-sketch_2.11-2.2.1.jar common
+ s-beanutils-1.7.0.jar jackson-annotations-2.6.5.jar curator-recipes-2
+ .6.0.jar javax.inject-1.jar spire_2.11-0.13.0.jar htrace-core-3.0.4.j
+ ar hadoop-common-2.6.5.jar scala-xml_2.11-1.0.5.jar guice-3.0.jar com
+ mons-compress-1.4.1.jar jawn-parser_2.11-0.11.0.jar chill-java-0.8.0.
+ jar commons-math3-3.4.1.jar minlog-1.3.0.jar commons-httpclient-3.1.j
+ ar zookeeper-3.4.6.jar circe-jawn_2.11-0.9.0-M3.jar univocity-parsers
+ -2.2.1.jar scalap-2.11.11.jar commons-lang-2.6.jar jersey-container-s
+ ervlet-2.22.2.jar validation-api-1.1.0.Final.jar parquet-hadoop-1.8.2
+ .jar jackson-jaxrs-1.9.13.jar ivy-2.4.0.jar jackson-databind-2.6.5.ja
+ r jersey-container-servlet-core-2.22.2.jar commons-digester-1.8.jar c
+ ommons-configuration-1.6.jar opencsv-2.3.jar mssql-jdbc-6.2.1.jre8.ja
+ r curator-framework-2.6.0.jar jackson-module-paranamer-2.6.5.jar comm
+ ons-lang3-3.5.jar spark-streaming_2.11-2.2.1.jar avro-ipc-1.7.7-tests
+ .jar hadoop-mapreduce-client-common-2.6.5.jar json4s-core_2.11-3.2.11
+ .jar hk2-locator-2.4.0-b34.jar xbean-asm5-shaded-4.4.jar aeron-driver
+ -1.2.5.jar cats-kernel_sjs0.6_2.11-1.0.0-RC2.jar spark-core_2.11-2.2.
+ 1.jar jackson-core-2.6.5.jar spire-macros_2.11-0.13.0.jar scalajs-lib
+ rary_2.11-0.6.21.jar spray-json_2.11-1.3.3.jar jackson-xc-1.9.13.jar 
+ log4j-1.2.17.jar breeze_2.11-0.13.2.jar akka-http-spray-json_2.11-10.
+ 0.10.jar javax.servlet-api-3.1.0.jar spark-network-shuffle_2.11-2.2.1
+ .jar akka-http-core_2.11-10.0.10.jar jersey-common-2.22.2.jar scala-c
+ ompiler-2.11.11.jar commons-io-2.4.jar pmml-schema-1.2.15.jar janino-
+ 3.0.0.jar pyrolite-4.13.jar akka-remote_2.11-2.4.19.jar jackson-modul
+ e-scala_2.11-2.6.5.jar hadoop-mapreduce-client-core-2.6.5.jar commons
+ -beanutils-core-1.8.0.jar commons-net-2.2.jar objenesis-2.1.jar react
+ ive-streams-1.0.0.jar akka-stream_2.11-2.4.19.jar parquet-encoding-1.
+ 8.2.jar apacheds-i18n-2.0.0-M15.jar oro-2.0.8.jar circe-scalajs_sjs0.
+ 6_2.11-0.9.0-M3.jar jetty-util-6.1.26.jar jul-to-slf4j-1.7.16.jar jav
+ ax.ws.rs-api-2.0.1.jar macro-compat_2.11-1.1.1.jar spark-sql_2.11-2.2
+ .1.jar
+

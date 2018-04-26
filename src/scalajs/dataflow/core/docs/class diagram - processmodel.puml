@@ -1,0 +1,163 @@
+@startuml
+
+class Execution <<case class>> {
+    +process: Process
+    +runToActivity: Int
+}
+
+Execution --> Process
+
+class Process <<case class>> {
+    +id: UUID
+    +activities: List[Activity]
+    +codes: Seq[Code]
+    +helper: ExecutionHelper
+    +topology(): ProcessTopology
+    +run(runTo: Int, rc: RunningContext)
+}
+
+Process o--> Activity
+Process *-> Code
+Process -> Topology.ProcessTopology: generates
+Process --> ExecutionHelper: uses
+Process --> RunningContext
+
+class ExecutionHelper {
+    -activityMap: Map[Int, Activity] <<lazy>>
+    -portMap: Map[Int, ActivityPort] <<lazy>>
+    +connectionGetter: ConnectionInfo=>BaseConnector
+    +getConnector(cinfo: ConnectionInfo): BaseConnector
+    +findActivity(id: Int): Activity
+    +findPort(id: Int): ActivityPort
+}
+
+class Activity <<case class>> {
+    +id: Int
+    +inPorts: List[ActivityPort]
+    +outPorts: List[ActivityPort]
+    +context: ActivityContext
+    +generation: Int
+    +helper: ExecutionHelper
+    +dfName: String
+    +populate(current: Int): Int
+    -checkHelper(): Unit
+    +getInboundActivity(): Activity
+    +getInboundActivity(index: Int): Activity
+}
+
+Activity *-- ActivityPort: inPorts, outPorts
+Activity --> ActivityContext
+Activity --> ExecutionHelper: uses
+
+class Transition <<case class>> {
+    +fromPort: Int
+    +toPort: Int
+}
+
+Transition -> ActivityPort: fromPort, toPort \n (reference by id)
+
+class ActivityPort <<case class>> {
+    +id: Int
+    +activityId: Int
+    +transitions: List[Transition]
+}
+
+ActivityPort *-> Transition
+
+class ActivityContext <<case class>> {
+    +jar: JarSpec
+    +context: String
+    -invoke(methodName: String, args: Object*): Object
+    +run(activity: Activity, rc: RunningContext): Object
+    {static} +empty(): ActivityContext
+}
+
+ActivityContext --> RunningContext
+
+class Code <<case class>> {
+    +name: String
+    +body: String
+    +type: CodeType
+    +register(rc: RunningContext)
+    -registerUDF(rc: RunningContext)
+    -registerUDAF(rc: RunningContext)
+}
+
+enum CodeType {
+    Function
+    Aggregation
+}
+
+Code -> CodeType
+
+class ExecutionResult <<case class>> {
+    +activities: Map[Int, ActivityStatistic]
+}
+
+ExecutionResult o--> ActivityStatistic
+
+class ActivityStatistic <<case class>> {
+    +id: Int
+    +state: ActivityState
+    +duration: Long
+    +progress:Double
+    +resultSize: Long
+    +messages:String
+    +view: String
+    +changeState(newState: ActivityState): ActivityStatistic
+    +color(): String
+    +label(): String
+    {static} +fromActivity(activity: Activity): ActivityStatistic
+}
+
+Enum ActivityState {
+    Idle
+    Running
+    Complete
+    Failed
+}
+
+ActivityStatistic -> ActivityState
+
+namespace Topology {
+
+    class ProcessTopology <<case class>> {
+        +generations: Int
+        +parallels: List[ParallelActivities]
+    }
+
+    ProcessTopology *--> ParallelActivities
+
+    class ParallelActivities <<case class>> {
+        +generation: Int
+        +parallels: List[Activity]
+    }
+
+    ParallelActivities o--> .Activity
+
+}
+
+class RunningContext {
+    +process: Process
+    -sysconf: Config <<lazy>>
+    -appName: String <<lazy>>
+    -master: String <<lazy>>
+    -registeredCodes: Map[String, Code] <<mutable>>
+    +conf: SparkConf <<lazy>>
+    +spark: SparkSession <<lazy>>
+    +toolBox: ToolBoxImpl <<lazy>>
+    +dataFrames: Map[Int, DataFrame] <<mutable>>
+    +statistics: Map[Int, ActivityStatistic] <<mutable>>
+    +eval[T](code: String): T
+    +getCode(name: String, `type`: CodeType): Code
+    +codeExists(name: String, `type`: CodeType): Boolean
+    +registerCode(name: String, `type`: CodeType)
+    +changeState(activity: Activity, newState: ActivityState): ActivityStatistic
+    +getViewName(activity: Activity): String
+    +cachePreviews(): Unit
+    +toInstance(): ProcessInstance
+}
+
+RunningContext o--> ActivityStatistic
+
+@enduml

@@ -1,0 +1,186 @@
+@startuml
+
+namespace DomFunction {
+
+    interface DomFunction {
+
+        +document: HTMLDocument <<lazy>>
+        +body: HTMLBodyElement <<lazy>>
+        -sizer: HTMLSpanElement
+        +Tags: Tags <<inner object>>
+
+        +createElement[T](tagName: String): T <<generic>>
+        +getElement(elem: Any): HTMLElement
+        +getRadioButtonValue(name: String): String
+        +setRadioButtonValue(name: String, value: String): Unit
+        +isRadioButton(name: String): Boolean
+        +isCheckbox(name: String): Boolean
+        +?(id: String): js.Dynamic
+        +alert(msg: String): Unit
+        +parseXml(xml: String): XML
+        +createContainer(parent: HTMLElement, id: String): HTMLDivElement
+        +any(that: Any): js.Any
+        +newInstance[T >: Null](className: String)(args: js.Any*): T <<generic>>
+        +getSize(s: String, fontSize: int, bold: Boolean): Point
+    }
+
+    ~class Point <inner case class> {
+        +x: Double
+        +y: Double
+    }
+
+    class Tags <<(O, #ff7733) singleton>> {
+        +table(): HTMLTableElement
+        +table(numOfRow: Int, numOfCell: int, div: Boolean): HTMLTableElement
+        +table(rows: HTMLTableRowElement*): HTMLTableElement
+        +table(f: (HTMLTableElement)=>Unit, rows: HTMLTableRowElement*): HTMLTableElement
+        +tr(): HTMLTableRowElement
+        +tr(numOfCell: Int): HTMLTableRowElement
+        +tr(f: HTMLTableRowElement=>Unit, cells: HTMLTableCellElement*): HTMLTableRowElement
+        +tr(cells: HTMLTableCellElement*): HTMLTableRowElement
+        +singleCellRow(): HTMLTableRowElement
+        +spacerRow(): HTMLTableRowElement
+        +spacerRow(height: Int): HTMLTableRowElement
+        +td(): HTMLTableCellElement
+        +td(content: HTMLElement): HTMLTableCellElement
+        +td(textContent: String): HTMLTableCellElement
+        +td(f: HTMLTableCellElement=>Any): HTMLTableCellElement
+        +td(f: ()=>HTMLElement): HTMLTableCellElement
+        +input(): HTMLInputElement
+        +password(): HTMLInputElement
+        +textArea(): HTMLInputElement
+        +button(caption: String, onclick: MouseEvent=>Unit): HTMLButtonElement
+        +upload(name: String): HTMLInputElement
+        +radioButton(caption: String, value: String, name: String, checked: Boolean): HTMLTableElement
+        +checkbox(caption: String, name: String, checked: Boolean): HTMLTableElement
+        +inputWithCaption(type: STring, caption: String, value: String, name: String, checked: Boolean): HTMLTableElement
+        +span(): HTMLSpanElement
+        +span(text: String, onclick: MouseEvent=>Unit, nowrap: Boolean): HTMLSpanElement
+        +multiline(text: String): HTMLSpanElement
+        +label(text: String, breakable: Boolean): HTMLSpanElement
+        +label(icon: String, text :String, breakable: Boolean): HTMLTableElement
+        +spacer(): HTMLSpanElement
+        +spacer(num: Int): HTMLSpanElement
+        +div(): HTMLDivElement
+        +div(text: String): HTMLDivElement
+        +div(f: HTMLDivElement=>HTMLElement): HTMLDivElement
+        +br(): HTMLBRElement
+        +img(): HTMLImageElement
+        +img(src: String, onclick: MouseEvent=>Unit, display: String, cursor: String): HTMLImageElement
+        +ul(): HTMLUListElement
+        +ul(items: Seq[String]): HTMLUListElement
+        +li(text: String) = HTMLLIElement
+        +select(): HTMLSelectElement
+        +select(sizeLimit: Int, options: Enumeration): HTMLSelectElement
+        +select(sizeLimit: Int, options: (String, String)*): HTMLSelectElement
+        +option(): HTMLOptionElement
+        +option(value: String, text: String): HTMLOptionElement
+        +style(css: String): HTMLStyleElement
+    }
+
+    class TableAccessor <inner class> {
+        +element: HTMLTableElement
+        +TableAccessor(table: HTMLTableElement) <<constructor>>
+        +row(index: Int): HTMLTableRowElement
+        +cell(index: Int): HTMLTableCellElement
+        +cell(rowIndex: Int, index: Int): HTMLTableCellElement
+        +content[T >: Null](rowIndex: Int, index: Int): T <<generic>>
+        +appendChild(rowIndex: Int, colIndex: Int, elemt: HTMLElement): Unit
+        +appendChild(cellIndex: Int, elem: HTMLElement): Unit
+    }
+
+    DomFunction *--> Tags
+    DomFunction -> Point
+    DomFunction -> TableAccessor
+    DomFunction *--> implicit_classes
+
+    namespace implicit_classes {
+
+        class HTMLTableExtension {
+            +getRows(start: Int): Seq[HTMLTableRowElement]
+        }
+
+        class HTMLTableRowExtension {
+            +remove(): Unit
+            +isEmpty(): Boolean
+            +nonEmpty(): Boolean
+        }
+
+        class HTMLTableCellExtension {
+            +table(): HTMLTableElement
+            +row(): HTMLTableRowElement
+            +rowIndex(): Int
+            +nextRow(): HTMLTableRowElement
+            +lastRow(): HTMLTableRowElement
+            +isInTitleRow(): Boolean
+        }
+
+        class MouseEventExtension {
+            +getAncestor[T](tagName: String): T <<generic>>
+        }
+
+        class NodeListExtension {
+            +isTypeOf(name: String, type: String): Boolean
+        }
+
+    }
+
+}
+
+interface AjaxClient {
+    ~url: String
+    +query[A: Decoder](path: Path, data: InputData, onSuccess: (A)=>Unit, onFailure: (Throwable)=>Unit): Unit
+    +queryXml(path: Path, data: InputData, onSuccess: (js.Any)=>_, onFailure: (Throwable)=>Unit): Unit
+    +queryPlainText(path: Path, data: InputData, onSuccess: (String)=>_, onFailure: (Throwable)=>Unit): Unit
+    -post(path: Path, data: InputData): Unit
+}
+
+class Path <inner case class> {
+    +segments: String*
+    +toString(): String
+}
+
+AjaxClient --> Path
+
+interface BaseControl {
+    messageBox: MessageBox <<inner object>>
+}
+
+DomFunction.DomFunction <|-- BaseControl
+BaseControl *--> MessageBox
+
+class MessageBox <<(O, #ff7733) singleton>> {
+    +buttons: Buttons <<inner object>>
+    -dialog: Dialog
+    -lastAnswer: Answer
+    +ask(message: String, yes: ()=>Unit, no: ()=>Unit): Unit
+    +showBusy(message: String, buttons: Button*): Unit
+    +showError(message: String): Unit
+    +show(content: Any, buttons: Button*): Unit
+    +show(content: Any, width: js.Any, height: js.Any, buttons: Button*): Unit
+    +close(): Unit
+}
+
+MessageBox *-> Buttons
+MessageBox *-> Answer
+
+enum Answer {
+    Yes
+    No
+}
+
+class Buttons <<(O, #ff7733) singleton>> {
+    +close: Button
+    +cancel: Button
+    +yes: Button
+    +no: Button
+}
+
+Buttons *-> Button
+
+class Button <inner case class> {
+    caption: String
+    onclick: MouseEvent=>Unit
+}
+
+@enduml

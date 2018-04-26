@@ -1,0 +1,213 @@
+@startuml
+
+package Diagram <<Rectangle>> {
+    class DiagramMxLayer {
+        +model: MxGraphModel
+        +graph: MxGraph
+        ~rubberband: MxRubberband
+        ~defaultParent: js.Any
+        +vertexIsPort(vertex: MxCell): Boolean
+        ~beginUpdate()
+        ~endUpdate()
+        +addListener(name: String, funct: js(MxEventSource, MxEventObject) => Unit)
+    }
+
+    class Diagram {
+        +nodes: ListBuffer[Vertex]
+        +styleManager: StyleManager
+        +keyManager: KeyManager
+        {field}+openContextMenu: (MxCell, Int, Int)=>_ <<handler>>
+        {field}+closeContextMenu: ()=>_ <<handler>>
+        {field}+vertexSelected: (MxCell)=>_ <<handler>>
+        {field}+edgeSelected: (MxCell)=>_ <<handler>>
+        -newNodeId: Int <<method>>
+        +newPortId: Int <<method>>
+        +selectedNodes: Seq[Node] <<method>>
+        +balloons: Diagram.Balloons <<inner object>>
+        -timeoutHandle: SetTimeoutHandle
+        +addNode(vertex: MxCell, context: BaseProxy): Node
+        +addNode(context: BaseProxy, x: Int, y: Int, width: Int, height: Int, style: String, relative: Boolean): Node
+        +findNode(vertex: MxCell): Node
+        +findNode(id: int): Node
+        +findPort(vertex: MxCell): NodePort
+        +findLink(edge: MxCell): Link
+        +addLink(edge: MxCell, source: NodePort, target: NodePort): Link
+        +addLink(source: NodePort, target: NodePort, style: String): Link
+        +removeNode(node: Node): Unit
+        +removeNode(vertex: MxCell): Unit
+        +removeLink(link: Link): Unit
+        +removeLink(edge: MxCell): Unit
+        +showNodeResult(node: Node): Unit
+        +validate(): Boolean
+        +runToNode(node: Node): Unit
+        +run(): Unit
+        +updateStatistics(result: ExecutionResult): Unit
+        +toggleDescriptions(): Unit
+        +toggleStatistics(): Unit
+        +toProtocol(): Process
+    }
+
+    ~class Diagram.Balloons <<(O,#ff7733) singleton>> {
+        +showingDescription: Boolean
+        +showingStatistics: Boolean
+        +clear(): Unit
+        +displayDescription(): Unit
+        +displayStatistics(): Unit
+    }
+
+    Diagram *-> Diagram.Balloons
+
+    DiagramMxLayer <|-- Diagram
+
+    package managers {
+
+        class Manager {
+            ~graph: MxGraph
+            +Manager(diagram: Diagram) <<constructor>>
+        }
+
+        class EventManager {
+            -chpt: MxConnectionHandler
+            -originConnect: js.Function4[MxConnectionHandler, MxCell, MxCell, js.Any, MxCell, Unit]
+            -DefaultMouseListener <<inner object>>
+        }
+
+        EventManager *--> EventManager.DefaultMouseListener
+
+        class EventManager.DefaultMouseListener <<(O,#ff7733) singleton>> {
+            -clicking: Boolean
+            def mouseDown(sender: MxEventSource, evt: MxMouseEvent): Unit
+            def mouseMove(sender: MxEventSource, evt: MxMouseEvent): Unit
+            def mouseUp(sender: MxEventSource, evt: MxMouseEvent): Unit
+        }
+
+        class KeyManager {
+            -keyHandler: MxKeyHandler
+            -delete(): Unit
+        }
+
+        class StyleManager {
+            +fontSize: Int
+            -vs: VertexStyle
+        }
+
+        Manager <|-- EventManager
+        Manager <|-- KeyManager
+        Manager <|-- StyleManager
+    }
+
+    Diagram *--> managers
+}
+
+class Node {
+    +id: Int
+    +vertex: MxCell
+    +graph: Graph
+    +proxy: BaseProxy
+    +overlays: Node.Overlays <<inner object>>
+    +balloon: Node.Balloon <<inner object>>
+    +diagram: Diagram
+    +inPorts: ListBuffer[VertexPort]
+    +outPorts: ListBuffer[VertexPort]
+    +schema: Schema
+    +lastStat: ActivityStatistic
+    +hasData: Boolean <<method>>
+    +x: Double
+    +y: Double
+    +width: Double
+    +height: Double
+    +moveTo(x: Double, y: Double): Unit
+    +moveTo(x: Double, y: Double, width: Double, height: Double): Unit
+    +addInPort(vertex: MxCell): NodePort
+    +addOutPort(vertex: MxCell): NodePort
+    -addPort(ports: ListBuffer[VertexPort], vertex: MxCell): NodePort
+    +findLink(edge: MxCell): Link
+    +delete(): Unit
+    +validate(): Boolean
+    +toProtocol(): Activity
+}
+
+class Node.Overlays <<(O,#ff7733) singleton>> {
+    -overlay: MxCellOverlay
+    +show(icon: MxImage, tooltip: String, onclick: ()=>Unit): MxCellOverlay
+    +showError(tooltip: String, onclick: ()=>Unit): MxCellOverlay
+    +clear(): Unit
+}
+
+Node *--> Node.Overlays
+
+class Node.Balloon <<(O,#ff7733) singleton>> {
+    -cell: MxCell
+    +visible: Boolean`
+    +showDescription(): Unit
+    +showStatistic(): Unit
+    +clear(): Unit
+    -create(text: String, color: String)
+    -split(s: String, len: Int): Array[String]
+    -max(strs: Array[String]): String
+}
+
+Node *--> Node.Balloon
+
+Diagram *-> Node
+
+class NodePort {
+    +id: Int
+    +vertex: MxCell
+    +owner: Vertex
+    +schema: Schema
+    +link: Edge
+    +links: ListBuffer[Edge] <<method>>
+    +toProtocol(): ActivityPort
+}
+
+Node *--> NodePort: inPorts, outPorts
+
+class Link {
+    +edge: MxCell
+    +diagram: Diagram
+    +from: VertexPort
+    +to: VertexPort
+    +connect(src: NodePort, tar: NodePort): Link
+    +reconnect(newSrc: NodePort, newTar: NodePort): Link
+    +delete()
+    +toProtocol: Transition
+}
+
+NodePort *--> Link: contains
+Link --> NodePort: from, to
+
+package core.graphicmodel <<refer to core\class diagram - graphicalmodel>> {
+
+    interface Graph
+    interface Vertex
+    interface VertexPort
+    interface Edge
+
+}
+
+Graph <|-- Diagram
+Vertex <|-- Node
+VertexPort <|-- NodePort
+Edge <|- Link
+
+package controls <<refer to core\class diagrams>>{
+
+    interface AjaxClient
+    interface DomFunction
+
+}
+
+AjaxClient <|-- Diagram
+DomFunction <|-- Diagram
+
+package designer <<refer to designer>> {
+
+    interface DesignerAuxiliary
+
+}
+
+DesignerAuxiliary <|-- Diagram
+
+
+@enduml

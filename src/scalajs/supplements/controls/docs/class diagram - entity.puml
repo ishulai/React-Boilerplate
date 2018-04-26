@@ -1,0 +1,97 @@
+@startuml
+
+interface Entity {
+    {abstract} title: String
+    {abstract} autoGenerateUI: Boolean
+    {abstract} UserDefinedUI: HTMLElement
+    +fixedUIWidth: Int
+    +fixedUIHeight: Int
+    +containerWidth: String <<final>>
+    -controls: ListBuffer[EditorControl]
+    +isBackAllowed: Boolean
+    +requiresButtons: Boolean
+    +fieldSpecs: Seq[FieldSpec]
+    +form: EntityForm
+    {field}+nextHandler: ()=>_
+    {field}+confirmHandler: ()=>_
+    +registerControl(ctrl: EditorControl): EditorControl
+    +complete(): Unit
+    +validate(ignoreFields: String*): Boolean
+    {abstract} fill(): Unit
+    {abstract} collect(): Unit
+}
+
+Entity o--> EditorControl
+Entity o-> FieldSpec
+
+interface EditorControl {
+    {abstract} complete(): Unit
+}
+
+class FieldSpec <case class> {
+    +name: String
+    +label: String
+    +fieldType: FieldType
+    +userData: Any
+    +width: Int
+    +height: Int
+    +validator: BaseValidator
+    +childSpecs: Seq[FieldSpec]
+    +customRenderer: FieldSpec=>HTMLElement
+    +validate(): Boolean
+}
+
+FieldSpec --> FieldType
+FieldSpec --> validators.BaseValidator
+
+enum FieldType {
+    Text
+    TextArea
+    Password
+    Collapsable
+    Select
+    List
+    RadioButton
+    Checkbox
+    UploadArea
+    RadioGroup
+    RadioGroupWithInput
+    Custom
+    +hasIndependentLabel(value: FieldType): Boolean
+    +needsId(value: FieldType): Boolean
+}
+
+package validators {
+
+    interface BaseValidator {
+        +element: HTMLElement
+        {field}+valueReader: ()=>String
+        +value: String
+        +validate(): Boolean
+        ~highlight(): Unit
+        ~reset(): Unit
+    }
+
+    class RequiredValidator {
+        +validate(): Boolean
+    }
+
+    class RangeValidator {
+        +RangeValidator(min: Int, max: Int, allowNull: Boolean) <<constructor>>
+        +validate(): Boolean
+    }
+
+    class CustomValidator {
+        +CustomValidator(rule: (String)=>Boolean) <<constructor>>
+        +validate(): Boolean
+    }
+
+    BaseValidator <|-- RequiredValidator
+    BaseValidator <|-- RangeValidator
+    BaseValidator <|-- CustomValidator
+
+
+
+}
+
+@enduml

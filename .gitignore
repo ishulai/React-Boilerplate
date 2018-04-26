@@ -1,0 +1,10 @@
+node_modules
+access.log
+**/.DS_Store
+public/style.css
+public/uifrwk.js
+src/scss/.sass-cache
+.vscode
+src/scalajs/**/target
+public/dataflow_designer-fastopt.js
+public/dataflow_designer-fastopt.js.map

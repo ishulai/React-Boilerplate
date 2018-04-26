@@ -1,0 +1,67 @@
+@startuml
+
+package controls <<refer to controls>> {
+
+    interface BaseDesigner
+    interface BaseControl
+    interface Entity
+    interface AjaxClient
+    interface DomFunction
+
+    DomFunction <|- BaseControl
+
+}
+
+interface DesignerEntity
+
+Entity <|-- DesignerEntity
+DomFunction <|-- DesignerEntity
+AjaxClient <|-- DesignerEntity
+
+class DataFlowDesigner <<(O,#ff7733) singleton>>
+
+BaseDesigner <|-- DataFlowDesigner
+
+class Canvas
+
+class CodeEditor
+
+DesignerEntity <|-- CodeEditor
+BaseControl <|-- CodeEditor
+
+class Console
+
+interface DesignerAuxiliary
+
+DesignerAuxiliary <|-- Canvas
+DesignerAuxiliary <|-- Console
+DesignerAuxiliary <|-- Draggable
+DesignerAuxiliary <|-- SourceImporter
+BaseControl <|-- DesignerAuxiliary
+
+interface Draggable
+
+Draggable <|--- SourceManager
+Draggable <|--- Toolbox
+
+class SourceImporter
+
+class ConnectionSelector
+
+DesignerEntity <|-- ConnectionSelector
+
+class SchemaLoader
+
+DesignerEntity <|-- SchemaLoader
+
+class SourceManager
+
+class TableSelector
+
+DesignerEntity <|-- TableSelector
+
+class Toolbox
+
+AjaxClient <|-- Toolbox
+
+@enduml
